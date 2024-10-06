@@ -1,7 +1,6 @@
 import color from "@/themes/app.colors";
 import React from "react";
 import Swiper from "react-native-swiper";
-import { styles } from "./styles";
 import { slides } from "@/configs/constants";
 import {
   View,
@@ -11,8 +10,9 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Images from "@/utils/images";
-import { router } from "expo-router";
 import { BackArrow } from "@/utils/icons";
+import { styles } from "./styles";
+import { router } from "expo-router";
 
 export default function OnBoardingScreen() {
   return (
