@@ -18,7 +18,7 @@ export default function OtpVerificationScreen() {
   const [otp, setOtp] = useState("");
 //   const [loader, setLoader] = useState(false);
   const toast = useToast();
-  // const { phoneNumber } = useLocalSearchParams();
+  const { phoneNumber } = useLocalSearchParams();
 
   const handleSubmit = async () => {
     if (otp === "") {
@@ -28,22 +28,23 @@ export default function OtpVerificationScreen() {
     } else {
       
       const otpNumber = `${otp}`;
-      console.log(otp);
+      console.log(otp, phoneNumber);
 
-      // await axios
-      //   .post(`${process.env.EXPO_PUBLIC_SERVER_URI}registration`, {
-      //     phone_number: phoneNumber,
-      //   })
-      //   .then((res) => {
-      //     router.push("/(routes)/otp-verification");
-      //   })
-      //   .catch((err) => {
-      //     toast.show("Re-Check Your Phone/OTP Number"),
-      //       {
-      //         type: "danger",
-      //         placement: "bottom",
-      //       };
-      //   });
+      await axios
+        .post(`${process.env.EXPO_PUBLIC_SERVER_URI}/verify-otp`, {
+          phone_number: phoneNumber, otp: otpNumber,
+        })
+        .then((res) => {
+          // router.push("/(routes)/otp-verification");
+          toast.show("OTP Verified Successfully");
+        })
+        .catch((err) => {
+          toast.show("Re-Check Your Phone/OTP Number"),
+            {
+              type: "danger",
+              placement: "buttom",
+            };
+        });
     }
   };
 
@@ -59,7 +60,7 @@ export default function OtpVerificationScreen() {
           />
           <OTPTextInput
             handleTextChange={(code) => setOtp(code)}
-            inputCount={4}
+            inputCount={6}
             textInputStyle={style.otpTextInput}
             tintColor={color.subtitle}
             autoFocus={false}

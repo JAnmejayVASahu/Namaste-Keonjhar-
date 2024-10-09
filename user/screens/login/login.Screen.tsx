@@ -11,6 +11,7 @@ import Button from "@/components/common/button";
 import { router } from "expo-router";
 import { useToast } from "react-native-toast-notifications";
 import axios from "axios";
+import path from "path";
 
 export default function LoginScreen() {
   const [phone_number, setPhoneNumber] = useState("");
@@ -39,7 +40,7 @@ export default function LoginScreen() {
           phone_number: phoneNumber,
         })
         .then((res) => {
-          router.push("/(routes)/otp-verification");
+          router.push({pathname : "/(routes)/otp-verification", params : {phoneNumber}});
         })
         .catch((err) => {
           toast.show('Re-Check Your Phone/OTP Number'),
