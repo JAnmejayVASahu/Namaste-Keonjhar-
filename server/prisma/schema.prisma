@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  name         String
+  phone_number Float    @unique
+  email        String   @unique
+  rating       Float    @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  rides        rides[]  @relation("UserRides")
+}
+
+enum VechicleType {
+  createdAt
+  Motorcycle
+  CNG
+}
+
+model driver {
+  id                  String       @id @default(auto()) @map("_id") @db.ObjectId
+  name                String
+  country             String
+  phone_number        Float        @unique
+  email               String       @unique
+  vechicle_type       VechicleType
+  registration_number Float        @unique
+  registration_date   DateTime
+  driving_licence     Float
+  vechicle_color      String
+  rate                Float
+  ratings             Float        @default(0)
+  totalEarning        Float        @default(0)
+  totalRides          Float        @default(0)
+  pendingRides        Float        @default(0)
+  cancleRides         Float        @default(0)
+  rides               rides[]      @relation("DriverRides")
+}
+
+model rides {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  driverId  String   @db.ObjectId
+  charge    Float
+  users     user     @relation("UserRides", fields: [userId], references: [id])
+  driver    driver   @relation("DriverRides", fields: [driverId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

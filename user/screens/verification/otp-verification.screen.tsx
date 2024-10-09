@@ -16,9 +16,36 @@ import { style } from "./style";
 
 export default function OtpVerificationScreen() {
   const [otp, setOtp] = useState("");
-  const [loader, setLoader] = useState(false);
+//   const [loader, setLoader] = useState(false);
   const toast = useToast();
-  const { phoneNumber } = useLocalSearchParams();
+  // const { phoneNumber } = useLocalSearchParams();
+
+  const handleSubmit = async () => {
+    if (otp === "") {
+      toast.show("Please enter phone number and country code", {
+        placement: "bottom",
+      });
+    } else {
+      
+      const otpNumber = `${otp}`;
+      console.log(otp);
+
+      // await axios
+      //   .post(`${process.env.EXPO_PUBLIC_SERVER_URI}registration`, {
+      //     phone_number: phoneNumber,
+      //   })
+      //   .then((res) => {
+      //     router.push("/(routes)/otp-verification");
+      //   })
+      //   .catch((err) => {
+      //     toast.show("Re-Check Your Phone/OTP Number"),
+      //       {
+      //         type: "danger",
+      //         placement: "bottom",
+      //       };
+      //   });
+    }
+  };
 
   return (
     <AuthContainer
@@ -40,7 +67,7 @@ export default function OtpVerificationScreen() {
           <View style={[external.mt_30]}>
             <Button
               title="Verify"
-              onPress={() => router.push("/(tabs)/home")}
+              onPress={() => handleSubmit()}
               //   disabled={loader}
             />
           </View>
